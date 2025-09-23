@@ -1,0 +1,8 @@
+
+State Machine - |key|key_val
+Name key_val.011 key_val.010 key_val.001 key_val.000 key_val.100 
+key_val.000 0 0 0 0 0 
+key_val.001 0 0 1 1 0 
+key_val.010 0 1 0 1 0 
+key_val.011 1 0 0 1 0 
+key_val.100 0 0 0 1 1 

@@ -1,0 +1,8 @@
+|EX01_Logic
+A => F.IN0
+B => F.IN1
+C => F.IN1
+D => F.IN1
+F << F.DB_MAX_OUTPUT_PORT_TYPE
+
+

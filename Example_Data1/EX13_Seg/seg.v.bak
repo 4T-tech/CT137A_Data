@@ -1,0 +1,63 @@
+module seg(
+    input   wire            clk     ,
+    input   wire            rst     ,
+    output  reg     [7:0]   seg     ,
+    output  reg     [7:0]   sel
+);
+
+//seg code
+localparam  [7:0]   DIGIT0 = 8'hC0  ;
+localparam  [7:0]   DIGIT1 = 8'hF9  ;
+localparam  [7:0]   DIGIT2 = 8'hA4  ;
+localparam  [7:0]   DIGIT3 = 8'hB0  ;
+localparam  [7:0]   DIGIT4 = 8'h99  ;
+localparam  [7:0]   DIGIT5 = 8'h92  ;
+localparam  [7:0]   DIGIT6 = 8'h82  ;
+localparam  [7:0]   DIGIT7 = 8'hF8  ;
+localparam  [7:0]   DIGIT8 = 8'h80  ;
+localparam  [7:0]   DIGIT9 = 8'h90  ;
+
+//
+localparam          DSP_COUNT = 16'd50000   ;
+reg         [3:0]   bits                    ;
+reg         [15:0]  dsp_count               ;
+
+//1ms counter
+always @(posedge clk or posedge rst) begin
+    if(rst) 
+        dsp_count <= 16'd0;
+    else begin
+        if(dsp_count == DSP_COUNT)
+            dsp_count <= 16'd0;
+        else
+            dsp_count <= dsp_count + 16'd1;
+    end
+end
+
+//dynamic display
+always @(posedge clk or posedge rst) begin
+    if(rst) begin
+        bits <= 4'd0;
+        seg  <= 8'hFF;
+        sel  <= 8'h00;
+    end else begin
+        if(dsp_count == DSP_COUNT - 1) begin
+            if(bits == 4'd8)
+                bits <= 4'd0;
+            else
+                bits <= bits + 4'd1;           
+            case(bits)
+                4'd0:   begin   seg <= 8'hFF; sel <= 8'h01;   seg <= DIGIT0;  end
+                4'd1:   begin   seg <= 8'hFF; sel <= 8'h02;   seg <= DIGIT1;  end  
+                4'd2:   begin   seg <= 8'hFF; sel <= 8'h04;   seg <= DIGIT2;  end
+                4'd3:   begin   seg <= 8'hFF; sel <= 8'h08;   seg <= DIGIT3;  end
+                4'd4:   begin   seg <= 8'hFF; sel <= 8'h10;   seg <= DIGIT4;  end
+                4'd5:   begin   seg <= 8'hFF; sel <= 8'h20;   seg <= DIGIT5;  end
+                4'd6:   begin   seg <= 8'hFF; sel <= 8'h40;   seg <= DIGIT6;  end
+                4'd7:   begin   seg <= 8'hFF; sel <= 8'h80;   seg <= DIGIT7;  end
+            endcase
+        end
+    end      
+end
+
+endmodule

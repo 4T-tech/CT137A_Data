@@ -1,0 +1,70 @@
+
+module top (
+	input	wire			clk			,	
+	input 	wire			rst_n		,	
+
+	input 	wire	[3:0]	key_in		,		
+	
+	output	wire			we			,		
+	output 	wire			oe			,		
+	output 	wire			ce			,		
+
+	output	wire	[16:0]	addr		,		
+	inout	wire	[7:0]	data		,		
+	
+	output 	wire 	[7:0] 	seg_number	,	
+	output 	wire 	[7:0]	seg_choice		
+);
+
+
+wire				[7:0]	rd_data		;
+wire						rd_data_end	;
+reg							wr_request	;
+reg					[7:0]	wr_data		;
+
+
+//
+always@(posedge clk or negedge rst_n) begin
+	if(!rst_n) begin
+		wr_request <= 1'b1;
+		wr_data    <= 8'b1100_0011;
+	end else
+		wr_request <= 1'b0;
+end
+  
+//seg module
+segdisplay inst_seg(
+	.clk 				(clk)												,
+	.rst 				(rst_n)												,	
+	.seg_number_in 		({4'd13,4'd10,4'd10,4'd10,4'd10,4'd10,rd_data})		,
+	.seg_number 		(seg_number)										,
+	.seg_choice 		(seg_choice)
+
+
+);
+
+//sram module
+sram_controller u_sram_controller
+(
+   .clk					(clk)						,
+   .rst	    			(rst_n)						,
+
+	.we					(we)						,		
+	.oe					(oe)						,		
+	.ce 				(ce)						,		
+
+	.addr				(addr)						,		
+	.data				(data)						,
+
+	.rd_request			(~key_in[0])				,
+	.rd_data			(rd_data)					,
+	.rd_data_end		(rd_data_end)				,
+	.rd_addr			(17'b0_00000000_00000000)	,
+	.wr_request			(wr_request)				,
+	.wr_data			(wr_data)					,
+	.wr_addr			(17'b0_00000000_00000000)
+);
+
+
+endmodule 
+ 

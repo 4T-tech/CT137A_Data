@@ -1,0 +1,14 @@
+Analysis & Synthesis Status : Successful - Fri Oct 18 11:19:55 2024
+Quartus Prime Version : 23.1std.1 Build 993 05/14/2024 SC Lite Edition
+Revision Name : led_breath
+Top-level Entity Name : led_breath
+Family : Cyclone IV E
+Total logic elements : 88
+    Total combinational functions : 81
+    Dedicated logic registers : 35
+Total registers : 35
+Total pins : 10
+Total virtual pins : 0
+Total memory bits : 0
+Embedded Multiplier 9-bit elements : 0
+Total PLLs : 0

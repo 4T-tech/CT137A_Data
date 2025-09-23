@@ -1,0 +1,30 @@
+module top
+(
+	input	wire  			clk     ,
+	input  	wire			rst     ,
+	output	wire			tx      ,
+	input	wire			rx      
+);
+
+
+reg [7:0] 		tx_data             ;
+reg				done                ;
+
+uart_tx inst_tx( 
+    .clk				(clk)		,
+    .rst_n				(rst)		,
+    .tx_data         	(tx_data)	,
+    .tx_data_vld		(1'b1)		,
+    .ready     			(done)		,
+    .tx              	(tx)
+);	
+
+uart_rx inst_rx( 
+    .clk				(clk)       ,
+    .rst				(rst)       ,
+    .rx					(rx)        ,
+    .rx_data_vld		(done)      ,
+    .rx_data            (tx_data)
+);	
+
+endmodule

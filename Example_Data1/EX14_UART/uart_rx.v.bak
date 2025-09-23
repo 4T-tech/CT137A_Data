@@ -1,0 +1,191 @@
+module uart_rx( 
+    input				clk,
+    input				rst_n,
+    input            rx,
+    output           rx_data_vld,
+    output   [7:0]	rx_data            
+);								 
+//---------<参数定义>--------------------------------------------------------- 
+parameter   MAX_BPS = 115200;
+parameter   CLOCK = 50_000_000;
+parameter   MAX_1bit = CLOCK/MAX_BPS;//1bit要计434次
+parameter   CHECK_BIT = "None";//None无校验，Odd奇校验，Even偶校验
+    //状态机参数定义
+localparam  IDLE   = 'b0001,//空闲状态
+            START  = 'b0010,//起始位
+            DATA   = 'b0100,//数据位
+            CHECK  = 'b1000;
+//---------<内部信号定义>-----------------------------------------------------    
+reg 	[3:0]	cstate     ;//现态
+reg	[3:0]	nstate     ;//次态
+    
+wire			IDLE_START;
+wire    		START_DATA;
+wire    		DATA_IDLE;
+wire    		DATA_CHECK;
+wire    		CHECK_IDLE;
+ 
+reg	[8:0]	cnt_baud	   	;//波特计数器，波特率115200
+wire			add_cnt_baud	;
+wire			end_cnt_baud	;
+ 
+reg	[2:0]	cnt_bit	   	;//bit计数器，起始位1bit，数据位8bit，结束位1bit
+wire			add_cnt_bit	;
+wire			end_cnt_bit	;
+    
+reg	[3:0]	bit_max;//bit最大值，复用需要考察每个状态的bit值
+ 
+reg	[7:0]	rx_temp;
+reg			rx_check;
+wire			check_val; 
+ 
+reg			rx_r1;
+reg			rx_r2;
+wire			rx_nege;
+ 
+//打两拍
+always @(posedge clk or negedge rst_n) begin
+	if (!rst_n) begin
+		rx_r1 <= 1;
+		rx_r2 <= 1;
+		end
+	else begin
+		rx_r1 <= rx;
+		rx_r2 <= rx_r1;
+		end
+	end
+ 
+assign rx_nege = ~rx_r1 && rx_r2;
+ 
+    //计434次
+always @(posedge clk or negedge rst_n)begin 
+	if(!rst_n)begin
+		cnt_baud <= 'd0;
+		end 
+	else if(add_cnt_baud)begin 
+		if(end_cnt_baud)begin 
+			cnt_baud <= 'd0;
+			end
+		else begin 
+			cnt_baud <= cnt_baud + 1'd1;
+			end 
+		end
+	end 
+    
+assign add_cnt_baud = cstate != IDLE;
+assign end_cnt_baud = add_cnt_baud && cnt_baud == MAX_1bit - 1'd1;
+    
+    //bit计数器
+always @(posedge clk or negedge rst_n)begin 
+	if(!rst_n)begin
+		cnt_bit <= 'd0;
+		end 
+	else if(add_cnt_bit)begin 
+		if(end_cnt_bit)begin 
+			cnt_bit <= 'd0;
+			end
+		else begin 
+			cnt_bit <= cnt_bit + 1'd1;
+			end 
+		end
+	end 
+    
+assign add_cnt_bit = end_cnt_baud;
+assign end_cnt_bit = add_cnt_bit && cnt_bit == bit_max -1'd1;
+    
+    //计数器复用
+always @(*)begin 
+	case (cstate)
+		IDLE :bit_max = 'd0;
+		START:bit_max = 'd1;//起始位1bit
+		DATA :bit_max = 'd8;//数据位8bit
+		CHECK:bit_max = 'd1;
+		default: bit_max = 'd0;
+	endcase
+end
+
+assign IDLE_START = (cstate == IDLE) && rx_nege;//识别到起始位0
+assign START_DATA = (cstate == START) && end_cnt_bit;//计1bit数据
+assign DATA_IDLE = (cstate == DATA) && end_cnt_bit && CHECK_BIT == "None";//计8bit数据
+assign DATA_CHECK = (cstate == DATA) && end_cnt_bit;
+assign CHECK_IDLE = (cstate == CHECK) && end_cnt_bit;
+    //第一段：时序逻辑描述状态转移
+always @(posedge clk or negedge rst_n)begin 
+	if(!rst_n)begin
+		cstate <= IDLE;
+		end 
+	else begin 
+		cstate <= nstate;
+		end 
+	end
+    
+    //第二段：组合逻辑描述状态转移规律和状态转移条件
+always @(*) begin
+	case(cstate)
+		IDLE  :begin
+			if (IDLE_START) begin
+				nstate = START;
+				end
+			else begin
+				nstate = cstate;
+				end
+			end
+		START :begin
+			if (START_DATA) begin
+				nstate = DATA;
+				end
+			else begin
+				nstate = cstate;
+				end
+			end
+		DATA  :begin
+			if (DATA_IDLE) begin
+				nstate = IDLE;
+				end
+			else if (DATA_CHECK) begin
+				nstate = CHECK;
+				end
+			else begin
+				nstate = cstate;
+				end
+			end
+		CHECK:begin
+			if (CHECK_IDLE) begin
+				nstate = IDLE;
+				end
+			else begin
+				nstate = cstate;
+				end
+			end
+		default : nstate = IDLE;
+	endcase
+end
+    //接受校验位
+always @(posedge clk or negedge rst_n) begin
+	if (!rst_n) begin
+		rx_check <= 0;
+		end
+	else if (cstate == CHECK && cnt_baud == MAX_1bit >>1) begin
+		rx_check <= rx_r1;
+		end
+	end
+    //计算校验位
+assign check_val = (CHECK_BIT == "Odd") ? ~^rx_temp : ^rx_temp;
+    //第三段：描述输出，时序逻辑或组合逻辑皆可
+always @(posedge clk or negedge rst_n) begin
+	if (!rst_n) begin
+		rx_temp <= 0;
+		end
+	else if (cstate == DATA && cnt_baud == MAX_1bit >> 1) begin//电平中间值采样，边沿采样容易出错
+		rx_temp[cnt_bit] <= rx_r1;
+		end
+	else begin
+		rx_temp <= rx_temp;
+	end
+end
+assign rx_data = rx_temp;
+assign rx_data_vld  = (CHECK_BIT == "None") ? DATA_IDLE
+                          :(CHECK_IDLE && (check_val == rx_check)) ? 1
+                          : 0;
+    
+endmodule

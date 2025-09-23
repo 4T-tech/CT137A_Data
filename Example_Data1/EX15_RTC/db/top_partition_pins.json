@@ -1,0 +1,89 @@
+{
+	"partitions" : [
+		{
+			"name" : "Top",
+			"pins" : [
+				{
+					"name" : "rtc_sclk",
+					"strict" : false
+				},
+				{
+					"name" : "rtc_ce",
+					"strict" : false
+				},
+				{
+					"name" : "seg_choice[0]",
+					"strict" : false
+				},
+				{
+					"name" : "seg_choice[1]",
+					"strict" : false
+				},
+				{
+					"name" : "seg_choice[2]",
+					"strict" : false
+				},
+				{
+					"name" : "seg_choice[3]",
+					"strict" : false
+				},
+				{
+					"name" : "seg_choice[4]",
+					"strict" : false
+				},
+				{
+					"name" : "seg_choice[5]",
+					"strict" : false
+				},
+				{
+					"name" : "seg_choice[6]",
+					"strict" : false
+				},
+				{
+					"name" : "seg_choice[7]",
+					"strict" : false
+				},
+				{
+					"name" : "seg_number[0]",
+					"strict" : false
+				},
+				{
+					"name" : "seg_number[1]",
+					"strict" : false
+				},
+				{
+					"name" : "seg_number[2]",
+					"strict" : false
+				},
+				{
+					"name" : "seg_number[3]",
+					"strict" : false
+				},
+				{
+					"name" : "seg_number[4]",
+					"strict" : false
+				},
+				{
+					"name" : "seg_number[5]",
+					"strict" : false
+				},
+				{
+					"name" : "seg_number[6]",
+					"strict" : false
+				},
+				{
+					"name" : "rtc_data",
+					"strict" : false
+				},
+				{
+					"name" : "clk",
+					"strict" : false
+				},
+				{
+					"name" : "rst",
+					"strict" : false
+				}
+			]
+		}
+	]
+}

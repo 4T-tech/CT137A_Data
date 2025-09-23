@@ -1,0 +1,1 @@
+Warning (10268): Verilog HDL information at top.v(45): always construct contains both blocking and non-blocking assignments File: E:/Work/[023] LQ Contest/Contest Learning Kits/Documents/CT137A/Example/EX16_Mem_Flash/top.v Line: 45

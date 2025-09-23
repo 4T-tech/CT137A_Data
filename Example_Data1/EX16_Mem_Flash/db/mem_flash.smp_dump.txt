@@ -1,0 +1,28 @@
+
+State Machine - |top|flash_contorl:flash_contorl_hp|state_ts
+Name state_ts.Flash_Bulk_Erase state_ts.Flash_Sector_Erase state_ts.Flash_Page_Program state_ts.Flash_Read_Data_Bytes state_ts.Flash_Write_Enable state_ts.Flash_Idle 
+state_ts.Flash_Idle 0 0 0 0 0 0 
+state_ts.Flash_Write_Enable 0 0 0 0 1 1 
+state_ts.Flash_Read_Data_Bytes 0 0 0 1 0 1 
+state_ts.Flash_Page_Program 0 0 1 0 0 1 
+state_ts.Flash_Sector_Erase 0 1 0 0 0 1 
+state_ts.Flash_Bulk_Erase 1 0 0 0 0 1 
+
+State Machine - |top|flash_contorl:flash_contorl_hp|state
+Name state.Flash_End state.Flash_Wait state.Flash_Bulk_Erase state.Flash_Sector_Erase state.Flash_Page_Program state.Flash_Read_Data_Bytes state.Flash_Read_Identification state.Flash_Write_Enable state.Flash_Idle 
+state.Flash_Idle 0 0 0 0 0 0 0 0 0 
+state.Flash_Write_Enable 0 0 0 0 0 0 0 1 1 
+state.Flash_Read_Identification 0 0 0 0 0 0 1 0 1 
+state.Flash_Read_Data_Bytes 0 0 0 0 0 1 0 0 1 
+state.Flash_Page_Program 0 0 0 0 1 0 0 0 1 
+state.Flash_Sector_Erase 0 0 0 1 0 0 0 0 1 
+state.Flash_Bulk_Erase 0 0 1 0 0 0 0 0 1 
+state.Flash_Wait 0 1 0 0 0 0 0 0 1 
+state.Flash_End 1 0 0 0 0 0 0 0 1 
+
+State Machine - |top|flash_contorl:flash_contorl_hp|spi_master:inst_spi_master|state
+Name state.SPI_END2 state.SPI_END state.SPI_DATA state.SPI_IDLE 
+state.SPI_IDLE 0 0 0 0 
+state.SPI_DATA 0 0 1 1 
+state.SPI_END 0 1 0 1 
+state.SPI_END2 1 0 0 1 
