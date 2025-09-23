@@ -1,0 +1,2 @@
+# CT137A_Data
+四梯FPGA竞赛实训平台（FPGA型号为EP4CE6E22C8N） 资料包
