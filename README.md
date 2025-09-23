@@ -19,9 +19,9 @@
 
 - Image：图片
 
-- LICENSE：许可证
+- doc:文档
 
-- CT137A_UM.pdf：四梯FPGA竞赛实训平台用户手册
+- LICENSE：许可证
 
 - 用户可以在 Intel/Altera 官网注册、下载开发环境，推荐下载 Quartus II 13.1 或 Quartus Prime 23.1（Lite Edition）版本。
 
