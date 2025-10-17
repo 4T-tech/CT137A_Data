@@ -1,0 +1,48 @@
+
+State Machine - |top|ds1302_test:ds1302_test_inst|state
+Name state.STOP state.READ state.READ_CH state.IDLE state.WRITE 
+state.IDLE 0 0 0 0 0 
+state.READ_CH 0 0 1 1 0 
+state.WRITE 0 0 0 1 1 
+state.READ 0 1 0 1 0 
+state.STOP 1 0 0 1 0 
+
+State Machine - |top|ds1302_test:ds1302_test_inst|ds1302_wr_ctrl:ds1302_wr_ctrl_inst|state
+Name state.READ_SEC state.READ_MIN state.READ_HOUR state.READ_DATE state.READ_MON state.READ_WEEK state.READ_YEAR state.WRITE_SEC state.WRITE_MIN state.WRITE_HOUR state.WRITE_DATE state.WRITE_MON state.WRITE_WEEK state.WRITE_YEAR state.WRITE_WP state.IDLE state.ACK 
+state.IDLE 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+state.WRITE_WP 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 
+state.WRITE_YEAR 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 1 0 
+state.WRITE_WEEK 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1 0 
+state.WRITE_MON 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 0 
+state.WRITE_DATE 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 1 0 
+state.WRITE_HOUR 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 0 
+state.WRITE_MIN 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1 0 
+state.WRITE_SEC 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 0 
+state.READ_YEAR 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 
+state.READ_WEEK 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1 0 
+state.READ_MON 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 0 
+state.READ_DATE 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 0 
+state.READ_HOUR 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 1 0 
+state.READ_MIN 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 
+state.READ_SEC 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 
+state.ACK 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 
+
+State Machine - |top|ds1302_test:ds1302_test_inst|ds1302_wr_ctrl:ds1302_wr_ctrl_inst|ds1302_io_convert:ds1302_io_convert_inst|state
+Name state.CE_LOW state.ACK state.WRITE_DATA state.WRITE_ADDR state.READ_DATA state.READ_ADDR state.CE_HIGH state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.CE_HIGH 0 0 0 0 0 0 1 1 
+state.READ_ADDR 0 0 0 0 0 1 0 1 
+state.READ_DATA 0 0 0 0 1 0 0 1 
+state.WRITE_ADDR 0 0 0 1 0 0 0 1 
+state.WRITE_DATA 0 0 1 0 0 0 0 1 
+state.ACK 0 1 0 0 0 0 0 1 
+state.CE_LOW 1 0 0 0 0 0 0 1 
+
+State Machine - |top|ds1302_test:ds1302_test_inst|ds1302_wr_ctrl:ds1302_wr_ctrl_inst|ds1302_io_convert:ds1302_io_convert_inst|spi_master:spi_master_inst|spi_state
+Name spi_state.ACK_WAIT spi_state.ACK spi_state.L_HALF_CYCLE spi_state.SCLK_EDGE spi_state.H_SCLK_IDLE spi_state.IDLE 
+spi_state.IDLE 0 0 0 0 0 0 
+spi_state.H_SCLK_IDLE 0 0 0 0 1 1 
+spi_state.SCLK_EDGE 0 0 0 1 0 1 
+spi_state.L_HALF_CYCLE 0 0 1 0 0 1 
+spi_state.ACK 0 1 0 0 0 1 
+spi_state.ACK_WAIT 1 0 0 0 0 1 

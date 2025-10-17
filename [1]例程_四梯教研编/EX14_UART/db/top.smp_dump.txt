@@ -1,0 +1,21 @@
+
+State Machine - |top|uart_rx:uart_rx_list|cstate
+Name cstate.CHECK cstate.DATA cstate.START cstate.IDLE 
+cstate.IDLE 0 0 0 0 
+cstate.START 0 0 1 1 
+cstate.DATA 0 1 0 1 
+cstate.CHECK 1 0 0 1 
+
+State Machine - |top|uart_tx:uart_tx_list|cstate
+Name cstate.STOP cstate.CHECK cstate.DATA cstate.START cstate.IDLE 
+cstate.IDLE 0 0 0 0 0 
+cstate.START 0 0 0 1 1 
+cstate.DATA 0 0 1 0 1 
+cstate.CHECK 0 1 0 0 1 
+cstate.STOP 1 0 0 0 1 
+
+State Machine - |top|KEY:key_inst|key_status
+Name key_status.IDLE key_status.RELESE key_status.PRESS 
+key_status.IDLE 0 0 0 
+key_status.PRESS 1 0 1 
+key_status.RELESE 1 1 0 

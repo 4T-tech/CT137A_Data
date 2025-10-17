@@ -1,0 +1,2 @@
+Warning (10268): Verilog HDL information at seg.v(28): always construct contains both blocking and non-blocking assignments File: C:/Users/4T/Desktop/123/EX19_DAC/seg.v Line: 28
+Info (10281): Verilog HDL Declaration information at iic_drive.v(26): object "IIC_SCL" differs only in case from object "iic_scl" in the same scope File: C:/Users/4T/Desktop/123/EX19_DAC/iic_drive.v Line: 26

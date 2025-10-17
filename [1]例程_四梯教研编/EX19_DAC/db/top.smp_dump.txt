@@ -1,0 +1,10 @@
+
+State Machine - |top|dac:dac_inst|iic_drive:iic_drive_inst|iic_state
+Name iic_state.STOP iic_state.R_DATA iic_state.R_START_DEVICE_ADDR iic_state.W_DATA iic_state.W_WORD_ADDR iic_state.START_DEVICE_ADDR iic_state.IDLE 
+iic_state.IDLE 0 0 0 0 0 0 0 
+iic_state.START_DEVICE_ADDR 0 0 0 0 0 1 1 
+iic_state.W_WORD_ADDR 0 0 0 0 1 0 1 
+iic_state.W_DATA 0 0 0 1 0 0 1 
+iic_state.R_START_DEVICE_ADDR 0 0 1 0 0 0 1 
+iic_state.R_DATA 0 1 0 0 0 0 1 
+iic_state.STOP 1 0 0 0 0 0 1 

@@ -1,0 +1,9 @@
+Warning (10268): Verilog HDL information at seg.v(29): always construct contains both blocking and non-blocking assignments File: C:/Users/4T/Desktop/123/EX15_RTC/seg.v Line: 29
+Info (10281): Verilog HDL Declaration information at ds1302_wr_ctrl.v(16): object "write_year" differs only in case from object "WRITE_YEAR" in the same scope File: C:/Users/4T/Desktop/123/EX15_RTC/ds1302_wr_ctrl.v Line: 16
+Info (10281): Verilog HDL Declaration information at ds1302_wr_ctrl.v(15): object "write_week" differs only in case from object "WRITE_WEEK" in the same scope File: C:/Users/4T/Desktop/123/EX15_RTC/ds1302_wr_ctrl.v Line: 15
+Info (10281): Verilog HDL Declaration information at ds1302_wr_ctrl.v(13): object "write_date" differs only in case from object "WRITE_DATE" in the same scope File: C:/Users/4T/Desktop/123/EX15_RTC/ds1302_wr_ctrl.v Line: 13
+Info (10281): Verilog HDL Declaration information at ds1302_wr_ctrl.v(12): object "write_hour" differs only in case from object "WRITE_HOUR" in the same scope File: C:/Users/4T/Desktop/123/EX15_RTC/ds1302_wr_ctrl.v Line: 12
+Info (10281): Verilog HDL Declaration information at ds1302_wr_ctrl.v(28): object "read_year" differs only in case from object "READ_YEAR" in the same scope File: C:/Users/4T/Desktop/123/EX15_RTC/ds1302_wr_ctrl.v Line: 28
+Info (10281): Verilog HDL Declaration information at ds1302_wr_ctrl.v(27): object "read_week" differs only in case from object "READ_WEEK" in the same scope File: C:/Users/4T/Desktop/123/EX15_RTC/ds1302_wr_ctrl.v Line: 27
+Info (10281): Verilog HDL Declaration information at ds1302_wr_ctrl.v(25): object "read_date" differs only in case from object "READ_DATE" in the same scope File: C:/Users/4T/Desktop/123/EX15_RTC/ds1302_wr_ctrl.v Line: 25
+Info (10281): Verilog HDL Declaration information at ds1302_wr_ctrl.v(24): object "read_hour" differs only in case from object "READ_HOUR" in the same scope File: C:/Users/4T/Desktop/123/EX15_RTC/ds1302_wr_ctrl.v Line: 24

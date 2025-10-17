@@ -1,0 +1,25 @@
+{
+	"partitions" : [
+		{
+			"name" : "Top",
+			"pins" : [
+				{
+					"name" : "iic_scl",
+					"strict" : false
+				},
+				{
+					"name" : "iic_sda",
+					"strict" : false
+				},
+				{
+					"name" : "sys_clk",
+					"strict" : false
+				},
+				{
+					"name" : "sys_rst",
+					"strict" : false
+				}
+			]
+		}
+	]
+}
